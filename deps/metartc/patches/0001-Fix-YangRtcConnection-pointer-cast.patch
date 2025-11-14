@@ -1,0 +1,11 @@
+--- a/libmetartccore6/src/yangrtc/YangRtcConnection.c
++++ b/libmetartccore6/src/yangrtc/YangRtcConnection.c
+@@ -754,7 +754,7 @@ void yang_destroy_rtcConnection(YangRtcConnection *conn) {
+ 	YangRtcSession* session=(YangRtcSession*)conn->session;
+ 	session->activeState = yangfalse;
+ 	//yang_stop(session->20ms);
+-	YangRtcSocketSession *sock = session->context.sock;
++	YangRtcSocketSession *sock = (YangRtcSocketSession *)session->context.sock;
+ 	if (sock == NULL)	return;
+ 	sock->isLoop = yangfalse;
+ 	while (sock->isStart)	yang_usleep(1000);

@@ -42,6 +42,7 @@ orcaslicer_add_cmake_project(OpenCV
        -DOPENCV_GAPI_GSTREAMER=OFF
        -DWITH_GTK_2_X=OFF
        -DWITH_JASPER=OFF
+       -DWITH_LERC=OFF
        -DWITH_LAPACK=OFF
        -DWITH_MATLAB=OFF
        -DWITH_MFX=OFF

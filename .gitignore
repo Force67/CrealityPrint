@@ -51,3 +51,10 @@ maxcmmid
 resources/i18n/*/*.*
 __pycache__
 /customized
+
+# Nix build outputs
+/result
+/result-*
+
+# Direnv
+.direnv

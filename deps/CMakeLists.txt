@@ -105,6 +105,7 @@ function(orcaslicer_add_cmake_project projectname)
     cmake_parse_arguments(P_ARGS "" "INSTALL_DIR;BUILD_COMMAND;INSTALL_COMMAND" "CMAKE_ARGS" ${ARGN})
 
     set(_configs_line -DCMAKE_BUILD_TYPE:STRING=${CMAKE_BUILD_TYPE})
+
     if (_is_multi OR MSVC)
         if (ORCA_INCLUDE_DEBUG_INFO AND NOT DEP_DEBUG)
             set(_configs_line "-DCMAKE_C_FLAGS_RELEASE:STRING=${CMAKE_C_FLAGS_RELWITHDEBINFO} -DCMAKE_CXX_FLAGS_RELEASE:STRING=${CMAKE_CXX_FLAGS_RELWITHDEBINFO}")
@@ -341,6 +342,12 @@ if(NOT FREETYPE_FOUND)
     set(FREETYPE_PKG "dep_FREETYPE") 
 endif()
 
+if(CMAKE_SYSTEM_NAME STREQUAL "Linux")
+    include(Opus/Opus.cmake)
+    include(libsrtp/libsrtp.cmake)
+    include(usrsctp/usrsctp.cmake)
+endif()
+
 execute_process(
     COMMAND ${GIT_EXECUTABLE} rev-parse --is-inside-work-tree
     RESULT_VARIABLE REV_PARSE_RESULT
@@ -420,6 +427,10 @@ else()
         dep_MQTTC
         dep_MQTT
         )
+endif()
+
+if(CMAKE_SYSTEM_NAME STREQUAL "Linux")
+    list(APPEND _dep_list "dep_opus" "dep_libsrtp" "dep_usrsctp")
 endif()
     
 if(CMAKE_SYSTEM_NAME STREQUAL "Linux")

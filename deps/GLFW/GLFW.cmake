@@ -7,9 +7,15 @@ else()
 endif()
 
 if(CMAKE_SYSTEM_NAME STREQUAL "Linux")
-    set(_glfw_use_wayland "-DGLFW_USE_WAYLAND=ON")
+    find_program(WAYLAND_SCANNER_EXECUTABLE wayland-scanner)
+    if (WAYLAND_SCANNER_EXECUTABLE)
+        set(_glfw_use_wayland "-DGLFW_USE_WAYLAND=ON")
+    else()
+        message(WARNING "wayland-scanner not found, building GLFW with X11 support")
+        set(_glfw_use_wayland "-DGLFW_USE_WAYLAND=OFF")
+    endif()
 else()
-    set(_glfw_use_wayland "-DGLFW_USE_WAYLAND=FF")
+    set(_glfw_use_wayland "-DGLFW_USE_WAYLAND=OFF")
 endif()
 
 orcaslicer_add_cmake_project(GLFW

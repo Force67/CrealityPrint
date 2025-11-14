@@ -22,11 +22,16 @@ endif ()
 # ** THIS INCLUDES BUILD ARGS. **
 # ...if you can find a way around this size limitation, be my guest.
 
+set(_wx_patch_command
+    bash -c "patch -p1 -i '${CMAKE_CURRENT_LIST_DIR}/patches/0001-cotire-test-min-version.patch' && sed -i \"s/cmake_minimum_required(VERSION 2.8.12)/cmake_minimum_required(VERSION 3.5)/\" build/cmake/modules/cotire.cmake"
+)
+
 orcaslicer_add_cmake_project(
     wxWidgets
     URL "https://github.com/CrealityOfficial/Orca-deps-wxWidgets/archive/refs/tags/v1.0.0.tar.gz"
     URL_HASH SHA256=74089054448d887c1b551ac98f4b46fa8960a5168df48aa77700c7a58071148c
     DEPENDS ${PNG_PKG} ${ZLIB_PKG} ${EXPAT_PKG} ${TIFF_PKG} ${JPEG_PKG}
+    PATCH_COMMAND ${_wx_patch_command}
     CMAKE_ARGS
         -DwxBUILD_PRECOMP=ON
         ${_wx_toolkit}
